@@ -11,4 +11,9 @@
 		#{userId},#{password},#{userName},#{birthday},#{age},#{gender},#{departmentId},#{role}
 		)
 	</insert>
+	
+	<!--ユーザー複数取得-->
+	<select id="findMany" resultType="MUser">
+		select * from m_user
+	</select>
 </mapper>
