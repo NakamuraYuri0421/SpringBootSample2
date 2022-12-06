@@ -50,14 +50,18 @@ public class UserServiceImpl2 implements UserService {
 	/**ユーザー取得（１件）*/
 	@Override
 	public MUser getUserOne(String userId){
-		Optional<MUser>option=repository.findById(userId);
+		Optional<MUser> option=repository.findById(userId);
 		MUser user=option.orElse(null);
 		return user;
 	}
 	/**ユーザー更新（1件）*/
 	@Transactional
 	@Override
-	public void updateUserOne(String useId,String password,String userName) {
+	public void updateUserOne(String userId,String password,String userName) {
+		//パスワード暗号化
+		String encryptPassword=encoder.encode(password);
+		//ユーザー更新
+		repository.updateUser(userId,encryptPassword,userName);
 	}
 	/**ユーザー削除（1件）*/
 	@Transactional
@@ -68,8 +72,6 @@ public class UserServiceImpl2 implements UserService {
 	/**ログインユーザー取得*/
 	@Override
 	public MUser getLoginUser(String userId) {
-		Optional<MUser> option=repository.findById(userId);
-		MUser user=option.orElse(null);
-		return user;
+		return repository.findLoginUser(userId);
 	}
 }
